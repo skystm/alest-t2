@@ -1,0 +1,129 @@
+=== Simulacao Help Desk - ALEST I ===
+Seed: 42 | Rodadas: 100 | Atendentes: 3 | Classificadores: 2 | CapFilaEnt: 5
+
+[R  1] Chegaram:2  | FilaEnt:0  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:0/3
+[R  2] Chegaram:0  | FilaEnt:0  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:0/3
+[R  3] Chegaram:1  | FilaEnt:0  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:2/3
+[R  4] Chegaram:2  | FilaEnt:1  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:2/3
+[R  5] Chegaram:3  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:2/3
+[R  6] Chegaram:1  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:2/3
+[R  7] Chegaram:1  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:2/3
+[R  8] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R  9] Chegaram:1  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 10] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:2/3
+[R 11] Chegaram:0  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:2/3
+[R 12] Chegaram:1  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 13] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 14] Chegaram:0  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 15] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:1  | Concluidos:0  | Atend.ocup:3/3
+[R 16] Chegaram:0  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:3/3
+[R 17] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 18] Chegaram:1  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:2/3
+[R 19] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:2/3
+[R 20] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:2/3
+[R 21] Chegaram:2  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 22] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 23] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 24] Chegaram:0  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 25] Chegaram:1  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 26] Chegaram:1  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:2/3
+[R 27] Chegaram:1  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:2/3
+[R 28] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 29] Chegaram:3  | FilaEnt:4  | C:0  A:1  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 30] Chegaram:0  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:3  | Atend.ocup:2/3
+[R 31] Chegaram:1  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 32] Chegaram:2  | FilaEnt:4  | C:0  A:0  N:1  | Concluidos:0  | Atend.ocup:3/3
+[R 33] Chegaram:0  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:3/3
+[R 34] Chegaram:1  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 35] Chegaram:1  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 36] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 37] Chegaram:1  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 38] Chegaram:1  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 39] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 40] Chegaram:1  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 41] Chegaram:1  | FilaEnt:4  | C:0  A:0  N:1  | Concluidos:0  | Atend.ocup:3/3
+[R 42] Chegaram:0  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:3/3
+[R 43] Chegaram:0  | FilaEnt:2  | C:0  A:0  N:1  | Concluidos:0  | Atend.ocup:3/3
+[R 44] Chegaram:1  | FilaEnt:2  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:3/3
+[R 45] Chegaram:1  | FilaEnt:2  | C:0  A:0  N:1  | Concluidos:0  | Atend.ocup:3/3
+[R 46] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:3/3
+[R 47] Chegaram:2  | FilaEnt:4  | C:0  A:1  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 48] Chegaram:0  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:3  | Atend.ocup:2/3
+[R 49] Chegaram:0  | FilaEnt:2  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 50] Chegaram:1  | FilaEnt:2  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 51] Chegaram:2  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 52] Chegaram:1  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:2/3
+[R 53] Chegaram:1  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 54] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 55] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:2/3
+[R 56] Chegaram:1  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:2/3
+[R 57] Chegaram:0  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:2/3
+[R 58] Chegaram:1  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 59] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:2/3
+[R 60] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 61] Chegaram:1  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 62] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 63] Chegaram:0  | FilaEnt:3  | C:0  A:1  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 64] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:3  | Atend.ocup:2/3
+[R 65] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 66] Chegaram:3  | FilaEnt:4  | C:0  A:1  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 67] Chegaram:0  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:3/3
+[R 68] Chegaram:1  | FilaEnt:3  | C:0  A:0  N:1  | Concluidos:0  | Atend.ocup:3/3
+[R 69] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:1  | Concluidos:1  | Atend.ocup:3/3
+[R 70] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:1  | Concluidos:1  | Atend.ocup:3/3
+[R 71] Chegaram:0  | FilaEnt:3  | C:0  A:0  N:1  | Concluidos:1  | Atend.ocup:3/3
+[R 72] Chegaram:0  | FilaEnt:2  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:3/3
+[R 73] Chegaram:3  | FilaEnt:4  | C:0  A:1  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 74] Chegaram:1  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:3/3
+[R 75] Chegaram:2  | FilaEnt:4  | C:0  A:0  N:1  | Concluidos:0  | Atend.ocup:3/3
+[R 76] Chegaram:1  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:3/3
+[R 77] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 78] Chegaram:2  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 79] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:2/3
+[R 80] Chegaram:0  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:2/3
+[R 81] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 82] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:2/3
+[R 83] Chegaram:1  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 84] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:2/3
+[R 85] Chegaram:2  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:2/3
+[R 86] Chegaram:0  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:2/3
+[R 87] Chegaram:2  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:2/3
+[R 88] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:2/3
+[R 89] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 90] Chegaram:2  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:2/3
+[R 91] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 92] Chegaram:2  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 93] Chegaram:2  | FilaEnt:4  | C:0  A:0  N:1  | Concluidos:0  | Atend.ocup:3/3
+[R 94] Chegaram:0  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:3  | Atend.ocup:2/3
+[R 95] Chegaram:2  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 96] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:1  | Atend.ocup:3/3
+[R 97] Chegaram:3  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:2/3
+[R 98] Chegaram:2  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+[R 99] Chegaram:2  | FilaEnt:4  | C:0  A:0  N:0  | Concluidos:2  | Atend.ocup:2/3
+[R100] Chegaram:0  | FilaEnt:3  | C:0  A:0  N:0  | Concluidos:0  | Atend.ocup:3/3
+
+--- Demandas ainda no sistema ao fim da simulacao ---
+Fila de entrada    : 3 chamado(s)
+Fila CRITICO       : 0 chamado(s)
+Fila ALTO          : 0 chamado(s)
+Fila NORMAL        : 0 chamado(s)
+Em classificacao   : 2 chamado(s)
+Em atendimento     : 3 chamado(s)
+
+========== RESUMO FINAL ==========
+Chamados chegaram   : 168
+Chamados recusados  : 65 (38.7%)
+Chamados classificados: 98
+Chamados concluídos : 95
+
+Espera média fila entrada    : 3.31 rodadas
+Espera média pós-classificação: 0.17 rodadas
+
+Tempo médio atend. CRITICO: 4.00 rodadas (n=15)
+Tempo médio atend. ALTO   : 3.00 rodadas (n=36)
+Tempo médio atend. NORMAL : 2.00 rodadas (n=44)
+
+Ocupação média atendentes   : 87.3%
+==================================
+
+CSV exportado: dados/cenario4_fila_pequena.csv

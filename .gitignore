@@ -1,2 +1,3 @@
 *.class
 metricas.csv
+__pycache__/

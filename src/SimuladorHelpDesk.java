@@ -35,61 +35,91 @@ public class SimuladorHelpDesk {
     static final String ARQUIVO_CSV = "metricas.csv";
 
     // =========================================================
+    // Uso: java SimuladorHelpDesk [csv=arquivo] [atendentes=N]
+    //      [classificadores=N] [capacidade=N] [rodadas=N] [seed=N]
+    //      [maxchegada=N] [tempoclassif=N]
+    // =========================================================
 
     public static void main(String[] args) {
 
-        Random rng = (SEED == -1) ? new Random() : new Random(SEED);
+        // leitura de overrides via linha de comando
+        long   seed             = SEED;
+        int    totalRodadas     = TOTAL_RODADAS;
+        int    capFilaEntrada   = CAPACIDADE_FILA_ENTRADA;
+        int    maxChegada       = MAX_CHEGADA_POR_RODADA;
+        int    numClass         = NUM_CLASSIFICADORES;
+        int    tempoClass       = TEMPO_CLASSIFICACAO;
+        int    numAtend         = NUM_ATENDENTES;
+        int[]  tempoAtend       = TEMPO_ATENDIMENTO.clone();
+        String arquivoCsv       = ARQUIVO_CSV;
+
+        for (String arg : args) {
+            String[] kv = arg.split("=", 2);
+            if (kv.length != 2) continue;
+            switch (kv[0].toLowerCase()) {
+                case "seed":            seed           = Long.parseLong(kv[1]);   break;
+                case "rodadas":         totalRodadas   = Integer.parseInt(kv[1]); break;
+                case "capacidade":      capFilaEntrada = Integer.parseInt(kv[1]); break;
+                case "maxchegada":      maxChegada     = Integer.parseInt(kv[1]); break;
+                case "classificadores": numClass       = Integer.parseInt(kv[1]); break;
+                case "tempoclassif":    tempoClass     = Integer.parseInt(kv[1]); break;
+                case "atendentes":      numAtend       = Integer.parseInt(kv[1]); break;
+                case "csv":             arquivoCsv     = kv[1];                   break;
+            }
+        }
+
+        Random rng = (seed == -1) ? new Random() : new Random(seed);
+
+        final double probCritico = PROB_CRITICO;
+        final double probAlto    = PROB_ALTO;
 
         // Filas
-        Fila filaEntrada = new Fila(CAPACIDADE_FILA_ENTRADA);
+        Fila filaEntrada = new Fila(capFilaEntrada);
         Fila filaCritico = new Fila();
         Fila filaAlto    = new Fila();
         Fila filaNormal  = new Fila();
 
         // Recursos
-        Classificador[] classificadores = new Classificador[NUM_CLASSIFICADORES];
-        for (int i = 0; i < NUM_CLASSIFICADORES; i++)
-            classificadores[i] = new Classificador(i + 1, TEMPO_CLASSIFICACAO);
+        Classificador[] classificadores = new Classificador[numClass];
+        for (int i = 0; i < numClass; i++)
+            classificadores[i] = new Classificador(i + 1, tempoClass);
 
-        Atendente[] atendentes = new Atendente[NUM_ATENDENTES];
-        for (int i = 0; i < NUM_ATENDENTES; i++)
-            atendentes[i] = new Atendente(i + 1, TEMPO_ATENDIMENTO);
+        Atendente[] atendentes = new Atendente[numAtend];
+        for (int i = 0; i < numAtend; i++)
+            atendentes[i] = new Atendente(i + 1, tempoAtend);
 
         Metricas metricas = new Metricas();
-        metricas.setNumAtendentes(NUM_ATENDENTES);
+        metricas.setNumAtendentes(numAtend);
 
         int contadorId = 1;
 
-        System.out.println("=== Simulação Help Desk — ALEST I ===");
-        System.out.printf("Seed: %d | Rodadas: %d | Atendentes: %d | Classificadores: %d%n%n",
-            SEED, TOTAL_RODADAS, NUM_ATENDENTES, NUM_CLASSIFICADORES);
+        System.out.println("=== Simulacao Help Desk - ALEST I ===");
+        System.out.printf("Seed: %d | Rodadas: %d | Atendentes: %d | Classificadores: %d | CapFilaEnt: %d%n%n",
+            seed, totalRodadas, numAtend, numClass, capFilaEntrada);
 
-        for (int rodada = 1; rodada <= TOTAL_RODADAS; rodada++) {
+        for (int rodada = 1; rodada <= totalRodadas; rodada++) {
 
             // ------------------------------------------------
             // PASSO 1 — Tick: avança estado de todos os recursos
             // ------------------------------------------------
-
-            // Classificadores que terminam devem ser coletados depois do tick
-            Chamado[] classificadosAgora = new Chamado[NUM_CLASSIFICADORES];
-            for (int i = 0; i < NUM_CLASSIFICADORES; i++)
+            Chamado[] classificadosAgora = new Chamado[numClass];
+            for (int i = 0; i < numClass; i++)
                 classificadosAgora[i] = classificadores[i].tick();
 
-            Chamado[] concluidosAgora = new Chamado[NUM_ATENDENTES];
-            for (int i = 0; i < NUM_ATENDENTES; i++)
+            Chamado[] concluidosAgora = new Chamado[numAtend];
+            for (int i = 0; i < numAtend; i++)
                 concluidosAgora[i] = atendentes[i].tick();
 
             // ------------------------------------------------
             // PASSO 2 — Move chamados classificados para fila de prioridade
             // ------------------------------------------------
-            for (int i = 0; i < NUM_CLASSIFICADORES; i++) {
+            for (int i = 0; i < numClass; i++) {
                 if (classificadosAgora[i] != null) {
                     Chamado c = classificadosAgora[i];
-                    // Atribui prioridade aleatória segundo as probabilidades
                     double sorteio = rng.nextDouble();
-                    if (sorteio < PROB_CRITICO)
+                    if (sorteio < probCritico)
                         c.prioridade = Chamado.CRITICO;
-                    else if (sorteio < PROB_CRITICO + PROB_ALTO)
+                    else if (sorteio < probCritico + probAlto)
                         c.prioridade = Chamado.ALTO;
                     else
                         c.prioridade = Chamado.NORMAL;
@@ -103,7 +133,7 @@ public class SimuladorHelpDesk {
             // PASSO 3 — Registra atendimentos concluídos
             // ------------------------------------------------
             int concluidosNaRodada = 0;
-            for (int i = 0; i < NUM_ATENDENTES; i++) {
+            for (int i = 0; i < numAtend; i++) {
                 if (concluidosAgora[i] != null) {
                     metricas.registrarConcluido(concluidosAgora[i]);
                     concluidosNaRodada++;
@@ -113,10 +143,10 @@ public class SimuladorHelpDesk {
             // ------------------------------------------------
             // PASSO 4 — Entrada: novos chamados chegam
             // ------------------------------------------------
-            int numChegando = rng.nextInt(MAX_CHEGADA_POR_RODADA + 1);
+            int numChegando = rng.nextInt(maxChegada + 1);
             metricas.registrarChegada(numChegando);
             for (int k = 0; k < numChegando; k++) {
-                String id   = String.format("CHAMADO-%03d", contadorId++);
+                String id    = String.format("CHAMADO-%03d", contadorId++);
                 Chamado novo = new Chamado(id, rodada);
                 boolean aceito = filaEntrada.enqueue(novo);
                 if (!aceito) metricas.registrarRecusado();
@@ -125,7 +155,7 @@ public class SimuladorHelpDesk {
             // ------------------------------------------------
             // PASSO 5 — Classificadores livres pegam da fila de entrada
             // ------------------------------------------------
-            for (int i = 0; i < NUM_CLASSIFICADORES; i++) {
+            for (int i = 0; i < numClass; i++) {
                 if (classificadores[i].isLivre() && !filaEntrada.isEmpty()) {
                     Chamado c = filaEntrada.dequeue();
                     classificadores[i].iniciar(c, rodada);
@@ -135,7 +165,7 @@ public class SimuladorHelpDesk {
             // ------------------------------------------------
             // PASSO 6 — Atendentes livres pegam da fila de maior prioridade
             // ------------------------------------------------
-            for (int i = 0; i < NUM_ATENDENTES; i++) {
+            for (int i = 0; i < numAtend; i++) {
                 if (atendentes[i].isLivre()) {
                     Chamado c = proximoDaFilaDeMaiorPrioridade(filaCritico, filaAlto, filaNormal);
                     if (c != null) atendentes[i].iniciar(c, rodada);
@@ -157,18 +187,18 @@ public class SimuladorHelpDesk {
                 concluidosNaRodada,
                 atendOcup);
 
-            System.out.printf("[R%3d] Chegaram:%-2d | FilaEnt:%-2d | C:%-2d A:%-2d N:%-2d | Concluídos:%-2d | Atend.ocup:%d/%d%n",
+            System.out.printf("[R%3d] Chegaram:%-2d | FilaEnt:%-2d | C:%-2d A:%-2d N:%-2d | Concluidos:%-2d | Atend.ocup:%d/%d%n",
                 rodada, numChegando,
                 filaEntrada.getTamanho(),
                 filaCritico.getTamanho(), filaAlto.getTamanho(), filaNormal.getTamanho(),
                 concluidosNaRodada,
-                atendOcup, NUM_ATENDENTES);
+                atendOcup, numAtend);
         }
 
         // ------------------------------------------------
         // Fim da simulação — estado residual
         // ------------------------------------------------
-        System.out.println("\n--- Demandas ainda no sistema ao fim da simulação ---");
+        System.out.println("\n--- Demandas ainda no sistema ao fim da simulacao ---");
         System.out.println("Fila de entrada    : " + filaEntrada.getTamanho() + " chamado(s)");
         System.out.println("Fila CRITICO       : " + filaCritico.getTamanho() + " chamado(s)");
         System.out.println("Fila ALTO          : " + filaAlto.getTamanho() + " chamado(s)");
@@ -177,7 +207,7 @@ public class SimuladorHelpDesk {
         int emClassificacao = 0;
         for (Classificador cl : classificadores)
             if (!cl.isLivre()) emClassificacao++;
-        System.out.println("Em classificação   : " + emClassificacao + " chamado(s)");
+        System.out.println("Em classificacao   : " + emClassificacao + " chamado(s)");
 
         int emAtendimento = 0;
         for (Atendente a : atendentes)
@@ -185,7 +215,7 @@ public class SimuladorHelpDesk {
         System.out.println("Em atendimento     : " + emAtendimento + " chamado(s)");
 
         metricas.imprimirResumo();
-        metricas.exportarCSV(ARQUIVO_CSV);
+        metricas.exportarCSV(arquivoCsv);
     }
 
     // -------------------------------------------------------
