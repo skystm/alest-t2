@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulador Help Desk</title>
+  <style>
+    :root { color-scheme: dark; --accent: #36a3ff; --panel: #172033; --text: #eef4ff; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; font-family: Arial, sans-serif; color: var(--text); background: #0b1020; }
+    main { max-width: 1180px; margin: auto; padding: 28px; }
+    h1 { margin: 0 0 6px; }
+    .subtitle { margin: 0 0 24px; color: #acc0df; }
+    .flow { display: grid; grid-template-columns: 1fr 1fr 1.4fr; gap: 14px; margin-bottom: 20px; }
+    .stage { min-height: 118px; border: 1px solid #33425f; border-radius: 12px; background: var(--panel); padding: 16px; }
+    .stage h2 { margin: 0 0 8px; font-size: 18px; color: var(--accent); }
+    .queues { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+    .queue { border-radius: 8px; padding: 8px; text-align: center; background: #0e1527; }
+    .controls { display: grid; grid-template-columns: repeat(6, minmax(120px, 1fr)); gap: 10px; margin-bottom: 16px; }
+    label { display: grid; gap: 6px; color: #bfd0e8; font-size: 13px; }
+    input, select, button { width: 100%; border-radius: 8px; border: 1px solid #405170; padding: 10px; background: #11192b; color: white; }
+    button { border: 0; background: var(--accent); color: #06101d; font-weight: bold; cursor: pointer; }
+    button:hover { filter: brightness(1.08); }
+    .actions { display: flex; gap: 8px; margin-bottom: 16px; }
+    .actions button { width: auto; min-width: 150px; }
+    pre { min-height: 380px; max-height: 560px; overflow: auto; white-space: pre-wrap; margin: 0; border: 1px solid #33425f; border-radius: 12px; background: #080d19; padding: 16px; color: #dce8fb; }
+    .status { margin: 0 0 10px; color: #9fb0c8; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Central de Suporte de TI</h1>
+    <p class="subtitle">Simulação com filas encadeadas, três prioridades e recursos limitados</p>
+
+    <section class="flow" aria-label="Etapas da simulação">
+      <article class="stage">
+        <h2>1. Entrada</h2>
+        Chamados chegam por rodada.<br>
+        Se a fila estiver cheia, são recusados.
+      </article>
+      <article class="stage">
+        <h2>2. Classificação</h2>
+        FIFO na fila de entrada.<br>
+        Recurso limitado por rodada.
+      </article>
+      <article class="stage">
+        <h2>3. Processamento</h2>
+        <div class="queues">
+          <div class="queue">CRÍTICO</div>
+          <div class="queue">ALTO</div>
+          <div class="queue">NORMAL</div>
+        </div>
+      </article>
+    </section>
+
+    <section class="controls">
+      <label>Seed <input id="seed" type="number" value="42"></label>
+      <label>Rodadas <input id="rodadas" type="number" min="1" max="1000" value="20"></label>
+      <label>Atendentes <input id="atendentes" type="number" min="1" max="100" value="3"></label>
+      <label>Classificadores <input id="classificadores" type="number" min="1" max="100" value="2"></label>
+      <label>Capacidade <input id="capacidade" type="number" min="1" max="100000" value="20"></label>
+      <label>Chegadas máx. <input id="maxchegada" type="number" min="0" max="100000" value="3"></label>
+    </section>
+
+    <div class="actions">
+      <button id="run" type="button">Executar referência</button>
+      <button id="run3" type="button">Executar 4 classificadores</button>
+    </div>
+    <p class="status" id="status">Pronto para executar.</p>
+    <pre id="output" aria-live="polite"></pre>
+  </main>
+
+  <script>
+    const fields = ["seed", "rodadas", "atendentes", "classificadores", "capacidade", "maxchegada"];
+
+    async function runSimulation(preset) {
+      if (preset === "classificadores") document.getElementById("classificadores").value = "4";
+      if (preset === "referencia") document.getElementById("classificadores").value = "2";
+
+      const params = new URLSearchParams();
+      fields.forEach(name => params.set(name, document.getElementById(name).value));
+      document.getElementById("run").setAttribute("disabled", "disabled");
+      document.getElementById("run3").setAttribute("disabled", "disabled");
+      document.getElementById("status").textContent = "Executando...";
+      document.getElementById("output").textContent = "";
+
+      try {
+        const response = await fetch("/api/run?" + params.toString());
+        const data = await response.json();
+        document.getElementById("output").textContent = data.output;
+        document.getElementById("status").textContent =
+          response.ok ? "Execução concluída." : "O simulador retornou um erro.";
+      } catch (error) {
+        document.getElementById("status").textContent = "Não foi possível executar.";
+        document.getElementById("output").textContent = String(error);
+      } finally {
+        document.getElementById("run").removeAttribute("disabled");
+        document.getElementById("run3").removeAttribute("disabled");
+      }
+    }
+
+    document.getElementById("run").addEventListener("click", () => runSimulation("referencia"));
+    document.getElementById("run3").addEventListener("click", () => runSimulation("classificadores"));
+  </script>
+</body>
+</html>

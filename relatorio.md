@@ -185,3 +185,19 @@ python gerar_graficos.py
 ```
 
 Os gráficos são salvos em `graficos/` e os dados de cada cenário em `dados/`.
+
+### Execução web para demonstração
+
+Também foi disponibilizada uma interface web para executar a simulação durante a apresentação:
+
+```bash
+javac src/*.java
+java -cp src HelpDeskServer
+```
+
+Abra `http://localhost:8080`. A interface permite escolher a semente, o número de rodadas, atendentes, classificadores, capacidade da fila e chegadas máximas. A aplicação pode ser publicada por Docker:
+
+```bash
+docker build -t alest-helpdesk .
+docker run --rm -p 8080:8080 -e PORT=8080 alest-helpdesk
+```

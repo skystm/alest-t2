@@ -1,0 +1,6 @@
+.git
+.gitignore
+.venv
+*.class
+dados
+graficos

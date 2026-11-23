@@ -68,6 +68,25 @@ public class SimuladorHelpDesk {
             }
         }
 
+        if (totalRodadas < 1) {
+            throw new IllegalArgumentException("rodadas deve ser maior ou igual a 1");
+        }
+        if (capFilaEntrada < 1) {
+            throw new IllegalArgumentException("capacidade deve ser maior ou igual a 1");
+        }
+        if (maxChegada < 0) {
+            throw new IllegalArgumentException("maxchegada deve ser maior ou igual a 0");
+        }
+        if (numClass < 1) {
+            throw new IllegalArgumentException("classificadores deve ser maior ou igual a 1");
+        }
+        if (tempoClass < 1) {
+            throw new IllegalArgumentException("tempoclassif deve ser maior ou igual a 1");
+        }
+        if (numAtend < 1) {
+            throw new IllegalArgumentException("atendentes deve ser maior ou igual a 1");
+        }
+
         Random rng = (seed == -1) ? new Random() : new Random(seed);
 
         final double probCritico = PROB_CRITICO;
