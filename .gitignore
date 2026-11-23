@@ -1,3 +1,5 @@
 *.class
 metricas.csv
 __pycache__/
+.venv/
+ALEST_1___Trabalho_2___2026_2.pdf

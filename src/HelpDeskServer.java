@@ -11,8 +11,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class HelpDeskServer {
 
@@ -55,7 +59,7 @@ public class HelpDeskServer {
         int maxChegada = bounded(params, "maxchegada", 3, 0, 100000);
         long seed = seed(params);
 
-        Path csv = Files.createTempFile("helpdesk-", ".csv");
+        Path csvPath = Files.createTempFile("helpdesk-", ".csv");
         try {
             ProcessBuilder pb = new ProcessBuilder(
                 "java", "-cp", "src",
@@ -66,7 +70,7 @@ public class HelpDeskServer {
                 "classificadores=" + classificadores,
                 "capacidade=" + capacidade,
                 "maxchegada=" + maxChegada,
-                "csv=" + csv
+                "csv=" + csvPath
             );
             pb.directory(new File(System.getProperty("user.dir")));
             pb.redirectErrorStream(true);
@@ -78,8 +82,12 @@ public class HelpDeskServer {
             }
             int exitCode = process.waitFor();
 
-            String json = escapeJson(output);
-            byte[] body = ("{\"exitCode\":" + exitCode + ",\"output\":\"" + json + "\"}")
+            String csv = Files.readString(csvPath, StandardCharsets.UTF_8);
+            byte[] body = ("{\"exitCode\":" + exitCode
+                + ",\"seed\":\"" + escapeJson(String.valueOf(seed))
+                + "\",\"summary\":" + extractSummary(output)
+                + ",\"history\":" + extractHistory(csv)
+                + ",\"output\":\"" + escapeJson(output) + "\"}")
                 .getBytes(StandardCharsets.UTF_8);
             exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
             exchange.getResponseHeaders().set("Cache-Control", "no-store");
@@ -91,7 +99,7 @@ public class HelpDeskServer {
             Thread.currentThread().interrupt();
             throw new IOException("Execution interrupted", exception);
         } finally {
-            Files.deleteIfExists(csv);
+            Files.deleteIfExists(csvPath);
         }
     }
 
@@ -133,5 +141,56 @@ public class HelpDeskServer {
             .replace("\n", "\\n")
             .replace("\r", "\\r")
             .replace("\t", "\\t");
+    }
+
+    private static String extractSummary(String output) {
+        Map<String, String> values = new LinkedHashMap<>();
+        addSummaryValue(values, "chegaram", output, "Chamados chegaram\\s*:\\s*(\\d+)");
+        addSummaryValue(values, "recusados", output, "Chamados recusados\\s*:\\s*(\\d+)\\s*\\(([^%)]+)%?\\)");
+        addSummaryValue(values, "classificados", output, "Chamados classificados\\s*:\\s*(\\d+)");
+        addSummaryValue(values, "concluidos", output, "Chamados conclu[^:]*dos\\s*:\\s*(\\d+)");
+        addSummaryValue(values, "esperaEntrada", output, "Espera[^:]*fila entrada\\s*:\\s*([\\d,\\.]+)");
+        addSummaryValue(values, "esperaPosClassificacao", output, "Espera[^:]*p.s-classifica[^:]*\\s*:\\s*([\\d,\\.]+)");
+        addSummaryValue(values, "ocupacao", output, "Ocupa[^:]*atendentes\\s*:\\s*([\\d,\\.]+)");
+
+        String result = "{";
+        boolean first = true;
+        for (Map.Entry<String, String> entry : values.entrySet()) {
+            if (!first) result += ",";
+            result += "\"" + entry.getKey() + "\":\"" + escapeJson(entry.getValue()) + "\"";
+            first = false;
+        }
+        return result + "}";
+    }
+
+    private static void addSummaryValue(Map<String, String> values, String name, String output, String regex) {
+        Matcher matcher = Pattern.compile(regex).matcher(output);
+        if (matcher.find()) {
+            values.put(name, matcher.group(1).replace(',', '.'));
+            if (matcher.groupCount() > 1) {
+                values.put(name + "Percent", matcher.group(2).replace(',', '.'));
+            }
+        }
+    }
+
+    private static String extractHistory(String csv) {
+        String[] lines = csv.split("\\R");
+        if (lines.length < 2) return "[]";
+
+        List<String> rows = new ArrayList<>();
+        for (int i = 1; i < lines.length; i++) {
+            String[] columns = lines[i].split(",");
+            if (columns.length < 6) continue;
+            try {
+                rows.add("{\"rodada\":" + Integer.parseInt(columns[0])
+                    + ",\"filaEntrada\":" + Integer.parseInt(columns[1])
+                    + ",\"filaCritico\":" + Integer.parseInt(columns[2])
+                    + ",\"filaAlto\":" + Integer.parseInt(columns[3])
+                    + ",\"filaNormal\":" + Integer.parseInt(columns[4])
+                    + ",\"concluidos\":" + Integer.parseInt(columns[5]) + "}");
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        return "[" + String.join(",", rows) + "]";
     }
 }
